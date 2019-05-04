@@ -24,11 +24,16 @@ def publish_feedprice(feed_price, wallet_port):
 	ret =market.publish_cny_feed_price(account_name, bts_amount * 100000, cny_amount * 10000, wallet_port)
 	print(ret)
 
-
+########## start to change#########
+## change port to like  cli_wallet -r ******:8093
 wallet_port = '8093'
+## change to the name of your witness
 account_name = 'account_name'
+## change to the password of your wallet
 password = 'passowrd'
-
+##change to the price which you want to feed  0.65 (cst/cny).
+feed_price = 0.555
+#####finish and run it (python3 cny_feedprice.py) in its dir / or other way
 
 account = client.Account(account_name, password, wallet_port)
 account.unlock()
@@ -39,7 +44,7 @@ order_book = market.get_order_book('CNY', 'CTS', 2, wallet_port)
 buy = order_book['bids']
 
 if buy == []:
-	feed_price = 0.555
+	#feed_price = 0.555
 	print("No buy order found, feed_price is ", feed_price)
 else:
 	feed_price = float(buy[0]['price']) * 1.1
