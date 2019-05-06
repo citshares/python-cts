@@ -82,22 +82,10 @@ sell_price_standard = 0
 
 
 order_book = market.get_order_book('CNY', 'CTS', 50, wallet_port)
-if order_book['bids'] == [] and order_book['asks'] == []:
-	cny_settlement_price = market.get_cny_settlement_price(wallet_port)
-	buy_price_standard = cny_settlement_price * 0.99
-	sell_price_standard = cny_settlement_price * 1.01
 
-elif order_book['bids'] and order_book['asks'] == []:
-	buy_price_standard = float(order_book['bids'][0]['price'])
-	sell_price_standard = buy_price_standard * 1.01
-
-elif order_book['bids'] == [] and order_book['asks']:
-	sell_price_standard = float(order_book['asks'][0]['price'])
-	buy_price_standard = sell_price_standard * 0.99
-
-elif order_book['bids'] and order_book['asks']:
-	buy_price_standard = float(order_book['bids'][0]['price'])
-	sell_price_standard = float(order_book['asks'][0]['price'])
+cny_settlement_price = market.get_cny_settlement_price(wallet_port)
+buy_price_standard = cny_settlement_price * 0.99
+sell_price_standard = cny_settlement_price * 1.01
 
 if buy_price_standard == 0 or sell_price_standard == 0:
 	print("Error: Can Not Get Price Standard")
