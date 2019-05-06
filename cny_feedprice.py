@@ -30,7 +30,7 @@ wallet_port = '8093'
 ## change to the name of your witness
 account_name = 'account_name'
 ## change to the password of your wallet
-password = 'passowrd'
+password = 'password'
 ##change to the price which you want to feed  0.65 (cst/cny).
 feed_price = 0.555
 #####finish and run it (python3 cny_feedprice.py) in its dir / or other way
@@ -44,11 +44,10 @@ order_book = market.get_order_book('CNY', 'CTS', 2, wallet_port)
 buy = order_book['bids']
 
 if buy == []:
-	#feed_price = 0.555
 	print("No buy order found, feed_price is ", feed_price)
 else:
 	feed_price = float(buy[0]['price']) * 1.1
-	print("found buy order, new feed_price is ", feed_price)
+	print("found buy order, 1.1 x buy_order is  ", feed_price)
 
 try:
 
@@ -56,9 +55,13 @@ try:
 except :
 	old_feed_price = feed_price
 
+feed_price = old_feed_price * 0.9 + feed_price * 0.1
 
-if feed_price < old_feed_price:
-	feed_price = old_feed_price
-	print("feed price fix to old feed price:", old_feed_price)
+if buy != []:
+	if feed_price < float(buy[0]['price']):
+		feed_price = loat(buy[0]['price']) * 1.02
+		print("fix feed price to buy price + 2%")
+
+print("feed price version 2 : ", feed_price)
 
 publish_feedprice(feed_price, wallet_port)
