@@ -12,9 +12,9 @@ def publish_feedprice(account_name, feed_price, wallet_port):
 # wallet port which cli_wallet opened  
 wallet_port = "8093"
 # feed price you want to feed
-feed_price = 0.65
+feed_price = 0.01
 # account name which you publish your feed price
-account_name = "your_account"
+account_name = "account_name"
 password = "password"
 #######################################################
 

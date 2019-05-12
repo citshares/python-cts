@@ -33,6 +33,8 @@ def publish_feed_price(account, cts_amount, asset_name, asset_id, asset_amount, 
         return post('publish_asset_feed', [account, asset_name, feed, True], port)
 
 
+def get_account(account_id, port):
+	return post("get_account", [account_id], port)
 
 def get_asset(asset_name, port):
 	return post('get_asset', [asset_name],port)['result']
@@ -43,3 +45,14 @@ def get_asset_precision(asset_name,port):
 		return int(asset_info['precision'])
 	else:
 		return Null
+
+def propose_parameter_change(proposing_account, exiration_time, changed_values , port):
+	return post('propose_parameter_change', [proposing_account, exiration_time, changed_values, True], port)
+
+def propose_change_worker_budget_per_day(proposing_account, budget_per_day, exiration_time, port):
+	budget_per_day = budget_per_day * 100000
+	info  = { "worker_budget_per_day": str(budget_per_day) }
+	return propose_parameter_change(proposing_account, exiration_time, info, port)
+
+def list_account_balances(account, port):
+	return post("list_account_balances", [account], port)
