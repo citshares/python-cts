@@ -9,7 +9,7 @@ def get_cny_settlement_price(port):
         result = get_object(["2.4.0"], port)["result"]
         cny = result[0]["current_feed"]['settlement_price']['base']['amount']
         bts = result[0]["current_feed"]['settlement_price']['quote']['amount']
-        return float(cny) * 10 / float(bts)
+        return float(cny) / float(bts)
 
 
 def publish_cny_feed_price(account, cts_amount, cny_amount, port):
