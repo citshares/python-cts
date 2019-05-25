@@ -18,7 +18,7 @@ import pdb
 import market
 
 
-def publish_feedprice(feed_price, wallet_port):
+def publish_feedprice(account_name, feed_price, wallet_port):
 	bts_amount = 100
 	cny_amount = bts_amount * feed_price
 	ret =market.publish_cny_feed_price(account_name, bts_amount * 100000, cny_amount * 10000, wallet_port)
@@ -32,7 +32,7 @@ account_name = 'account_name'
 ## change to the password of your wallet
 password = 'password'
 ##change to the price which you want to feed  0.65 (cst/cny).
-feed_price = 0.555
+feed_price = 0.01
 #####finish and run it (python3 cny_feedprice.py) in its dir / or other way
 
 account = client.Account(account_name, password, wallet_port)
@@ -46,8 +46,8 @@ buy = order_book['bids']
 if buy == []:
 	print("No buy order found, feed_price is ", feed_price)
 else:
-	feed_price = float(buy[0]['price']) * 1.1
-	print("found buy order, 1.1 x buy_order is  ", feed_price)
+	feed_price = float(buy[0]['price']) * 1.005
+	print("found buy order, 1.005 x buy_order is  ", feed_price)
 
 try:
 
@@ -55,13 +55,17 @@ try:
 except :
 	old_feed_price = feed_price
 
-feed_price = old_feed_price * 0.9 + feed_price * 0.1
+print("feed_price = old_price({}) * 0.8 + feed_price({}) * 0.2 ".format(old_feed_price, feed_price))
+feed_price = old_feed_price * 0.8 + feed_price * 0.2
+if feed_price < 0.01:
+	print("feed_price is lower than 0.01, ", feed_price)
+	feed_price = 0.01
 
 if buy != []:
 	if feed_price < float(buy[0]['price']):
-		feed_price = loat(buy[0]['price']) * 1.02
-		print("fix feed price to buy price + 2%")
+		feed_price = float(buy[0]['price']) * 1.005
+		print("fix feed price to buy price + 1.005%")
 
 print("feed price version 2 : ", feed_price)
 
-publish_feedprice(feed_price, wallet_port)
+publish_feedprice(account_name, feed_price, wallet_port)

@@ -21,7 +21,15 @@ def my_round(num, bit):
 	return math.floor(num * 10 ** bit) / 10 ** bit
 
 
-
+def compare_id(a, b):
+	f_a = int(a.split(".")[2])
+	f_b = int(b.split(".")[2])
+	if f_a > f_b :
+		return 1
+	elif f_a == f_b:
+		return 0
+	elif f_a < f_b:
+		return -1
 
 
 	

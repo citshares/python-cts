@@ -65,10 +65,10 @@ account_name = 'account_name'
 password = 'password'
 
 one_year = 3600 * 24 * 365
-buy_order_cny_limit = 1000
-sell_order_cts_limit = 1000
+buy_order_cny_limit = [100, 200, 400, 800, 1600]
+sell_order_cts_limit = [100, 200, 400, 800, 1600]
 sell_order_step_precision =  [1.01, 1.03, 1.05, 1.07, 1.09]
-buy_order_step_precision =   [0.99, 0.97, 0.95, 0.93, 0.91]
+buy_order_step_precision =   [0.999, 0.97, 0.95, 0.93, 0.91]
 
 ##################### start ############################
 
@@ -84,7 +84,7 @@ sell_price_standard = 0
 order_book = market.get_order_book('CNY', 'CTS', 50, wallet_port)
 
 cny_settlement_price = market.get_cny_settlement_price(wallet_port)
-buy_price_standard = cny_settlement_price * 0.99
+buy_price_standard = cny_settlement_price * 1
 sell_price_standard = cny_settlement_price * 1.01
 
 if buy_price_standard == 0 or sell_price_standard == 0:
@@ -119,11 +119,11 @@ buy_order_total = 0
 for i in range(0, len(buy_group)):
 	# buy order compare with cny
 	buy_order_total = buy_order_total + buy_group[i]
-	if buy_order_total > 5 * buy_order_cny_limit:
+	if buy_order_total > 5 * buy_order_cny_limit[4]:
 		print("We got enought buy_order_total, no need to buy")
 		break
-	if is_a_smaller_b(buy_group[i], buy_order_cny_limit):
-		new_order_cny_amount = buy_order_cny_limit - buy_group[i]
+	if is_a_smaller_b(buy_group[i], buy_order_cny_limit[i]):
+		new_order_cny_amount = buy_order_cny_limit[i] - buy_group[i]
 		price = buy_price_standard * buy_order_step_precision[i]
 		new_order_cts_amount = new_order_cny_amount / price
 		print("buy {} CTS at price {}".format(new_order_cts_amount, price))
@@ -133,11 +133,11 @@ sell_order_total = 0
 for i in range(0, len(sell_group)):
 	# sell order compare with cts
 	sell_order_total = sell_order_total + sell_group[i]
-	if sell_order_total > 5 * sell_order_cts_limit:
+	if sell_order_total > 5 * sell_order_cts_limit[4]:
 		print("We got enought sell_order_total, no need to sell")
 		break
-	if is_a_smaller_b(sell_group[i], sell_order_cts_limit):
-		new_order_cts_amount = sell_order_cts_limit - sell_group[i]
+	if is_a_smaller_b(sell_group[i], sell_order_cts_limit[i]):
+		new_order_cts_amount = sell_order_cts_limit[i] - sell_group[i]
 		price = sell_price_standard * sell_order_step_precision[i]
 		print("sell {} CTS at price {}".format(new_order_cts_amount, price))
 		account.sell('CTS', 'CNY', price, new_order_cts_amount, one_year) 
