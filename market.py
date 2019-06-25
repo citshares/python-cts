@@ -31,9 +31,11 @@ def get_call_orders(asset_name, count, port):
 
 def get_collateral_amount(asset_name, count, port):
 	orders = get_call_orders(asset_name, count, port)
+	print("call orders ", orders)
 	cts_in_collateral = 0
 	for item in orders:
 		cts_in_collateral = cts_in_collateral + int(item['collateral'])
+		print(item)
 	precision = get_asset_precision("CTS", port)
 	cts_in_collateral = (cts_in_collateral / 10 ** precision)
 	return cts_in_collateral

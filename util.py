@@ -13,7 +13,9 @@ def post(method, params, port):
 	"jsonrpc": "2.0",
 	"id": 1,
 	}
-	return requests.post(url, data=json.dumps(payload), headers=headers).json()
+	ret = requests.post(url, data=json.dumps(payload), headers=headers).json()
+	print(ret)
+	return ret
 
 
 

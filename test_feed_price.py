@@ -15,12 +15,12 @@ wallet_port = "8093"
 # feed price you want to feed
 feed_price = 0.01
 # account name which you publish your feed price
-account_name = "account"
-password = "password"
+account_name = "king-eight-egg"
+password = "a"
 #######################################################
 
 account = client.Account(account_name, password, wallet_port)
-account.unlock
+account.unlock()
 
 cny_supply = market.get_asset_supply("CNY", wallet_port)
 print("CNY SUPPLY IS ", cny_supply)
