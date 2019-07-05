@@ -33,3 +33,11 @@ def propose_change_worker_budget_per_day(proposing_account, budget_per_day, exir
 def list_account_balances(account, port):
         return post("list_account_balances", [account], port)
 
+def list_witness(count, port):
+	return post("list_witnesses", [1, count], port)['result']
+
+def get_vesting_balances(name, port):
+	return post("get_vesting_balances", [name], port)['result']
+
+
+

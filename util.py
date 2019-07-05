@@ -14,7 +14,6 @@ def post(method, params, port):
 	"id": 1,
 	}
 	ret = requests.post(url, data=json.dumps(payload), headers=headers).json()
-	print(ret)
 	return ret
 
 
